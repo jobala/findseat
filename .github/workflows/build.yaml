@@ -28,9 +28,6 @@ jobs:
         with:
           flutter-version: "3.13.2"
       - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
-      - run: flutter build apk --release
       - run: touch local_file.txt
       - uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
@@ -39,6 +36,9 @@ jobs:
           destination: s3://quill-apks/local_file.txt
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build apk --release
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/*.apk"
