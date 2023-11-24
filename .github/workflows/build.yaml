@@ -35,7 +35,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-east-1'
           aws-bucket: 'quill-apks' 
-      file-path: './myfile.txt'
+          file-path: './myfile.txt'
       - run: flutter analyze
       - run: flutter test
       - run: flutter build apk --release
