@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the tagged
   pull_request:
     branches:
-      - "master"
+      - "another-demo"
 
   # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,6 +28,14 @@ jobs:
         with:
           flutter-version: "3.13.2"
       - run: flutter pub get
+      - run: touch myfile.txt
+      - uses: hkusu/s3-upload-action@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
+          aws-bucket: 'quill-apks' 
+          file-path: './myfile.txt'
       - run: flutter analyze
       - run: flutter test
       - run: flutter build apk --release
